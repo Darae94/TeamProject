@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="orderdetail.model.OrderDetail">
+	
+	<select id="GetCount" resultType="int">
+		select count(*) from orderDetail
+		where pnum = #{pnum} and oday = #{oday} and otime = #{otime}
+	</select>
+	
+	<select id="GetOqtySum" resultType="int">
+		select sum(oqty) from orderDetail
+		where pnum = #{pnum} and oday = #{oday} and otime = #{otime}
+	</select>
+
+	<insert id="InsertData">
+		insert into orderdetail
+		values(seqodetail.nextval, #{onum}, #{pnum}, #{oday}, #{otime}, #{oqty})
+	</insert>
+	
+	<select id="GetData" resultType="orderdetail.model.OrdersInfo">
+		select od.pnum, e.name pname, e.img pimg, od.oday, od.otime, od.oqty, e.price,  e.price * od.oqty as amount
+		from orderDetail od join exhibition e
+		on od.pnum = e.num and od.onum = #{onum}
+	</select>
+	
+</mapper>
