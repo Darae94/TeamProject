@@ -1,0 +1,213 @@
+4/19 22:30 초원메모장만 수정  
+
+drop sequence mseq;
+create sequence mseq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+drop table members cascade constraints;
+create table members(
+	num number primary key,
+	id varchar2(20) unique,	-- 겹치지않게 하여 정보 찾을 때 사용 필요
+	password varchar2(20),
+	repassword varchar2(20),
+	name varchar2(20),
+	year varchar2(20),
+	month varchar2(20),
+	day varchar2(20),
+	email varchar2(20),
+	hp1 number,
+	hp2 number,
+	hp3 number,
+	add1 varchar2(100),
+	add2 varchar2(100),
+	style varchar2(20), -- 취향
+	cat varchar2(20), -- 관심 카테고리
+	age number,
+	gender varchar2(20)
+);
+
+insert into members(num, id, password, name, email)
+values(0, 'penguin', '1234', '펭귄', 'penguin@123');
+
+insert into members(num, id, password, name, email, style, cat, age, gender)
+values(mseq.nextval, 'coco', '1234', '코코', 'coco@123', '현대적인', '직업', 19, '여자');
+
+insert into members(num, id, password, name, email, style, cat, age, gender)
+values(mseq.nextval, 'jelly', '1234', '젤리', 'jelly@123', '실용적인', '애완동물', 25, '남자');
+
+insert into members(num, id, password, name, email, style, cat, age, gender)
+values(mseq.nextval, 'holy', '1234', '홀리', 'holy@123', '에너지넘치는', '티', 33, '여자');
+
+
+col num for 9;
+col id for a8;
+col password for a10;
+col name for a10;
+col email for a11;
+col style for a10;
+col cat for a10;
+col age for 9;
+col gender for a6;
+
+
+select num, id, password, name, email, style, cat, age, gender from members;
+
+commit;
+
+-- cate : 카테고리 테이블
+drop sequence cate_seq ;
+create sequence cate_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+drop table cate cascade constraints;
+
+create table cate(
+	num number primary key,
+	kind varchar2(20) not null,
+	code varchar2(20) not null
+);
+
+insert into cate 
+values(cate_seq.nextval,'유아','C01');
+insert into cate 
+values(cate_seq.nextval,'책','B01');
+insert into cate 
+values(cate_seq.nextval,'애완동물','P01');
+insert into cate 
+values(cate_seq.nextval,'꽃','F02');
+insert into cate 
+values(cate_seq.nextval,'정원','G01');
+insert into cate 
+values(cate_seq.nextval,'직업','J01');
+insert into cate 
+values(cate_seq.nextval,'티','T02');
+
+-- exhibition : 전시/박람 테이블
+drop sequence ex_seq;
+create sequence ex_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+DROP TABLE exhibition CASCADE CONSTRAINTS;
+
+create table exhibition(
+	num number not null primary key,
+	category varchar2(20) not null,
+	name varchar2(50) not null,
+	start_period date not null,
+	end_period date not null,
+	start_time varchar2(10) not null,
+	end_time varchar2(10) not null,
+	place varchar2(20) not null,
+	company varchar2(30) not null,
+	price number not null,
+	area_tel varchar2(10),
+	tel1 varchar2(10),
+	tel2 varchar2(10),
+	img varchar2(20),
+	style varchar2(100),
+	contents varchar2(300) not null
+);
+
+-- order : 주문 테이블
+drop sequence seqorder;
+create sequence seqorder start with 1 increment by 1 nocache ;
+
+DROP TABLE orders CASCADE CONSTRAINTS;
+
+create table orders(
+  onum number primary key,
+  mid varchar2(20) references members(id) on delete set null,
+  odate date default sysdate 
+);
+
+-- orderdetail : 주문 상세 테이블
+drop sequence seqodetail;
+create sequence seqodetail start with 1 increment by 1 nocache ;
+
+drop table orderdetail cascade constraints;
+
+create table orderdetail(
+  odnum number primary key,
+  onum number references orders(onum) on delete cascade,
+  pnum number references exhibition(num) on delete set null,
+  oday varchar2(20),
+  otime varchar2(20),
+  oqty number
+);
+
+commit;
+
+--공지사항 테이블
+drop table notice cascade constraints;
+create table notice(
+  no number primary key,
+  title varchar2(100) not null,
+  content clob,
+  regdate date default sysdate,
+  viewcnt number default 0,
+  imp number not null
+  );
+  
+drop sequence notice_seq;
+create sequence notice_seq
+  increment by 1
+  start with 1
+  minvalue 1
+  maxvalue 10000
+  nocache;
+  
+--qna 테이블
+drop table qna cascade constraints;
+create table qna(
+  no number primary key,
+  category varchar2(30) not null,
+  question varchar2(100) not null,
+  answer varchar2(300) not null,
+  regdate date default sysdate
+  );
+  
+drop sequence qna_seq;
+create sequence qna_seq
+  increment by 1
+  start with 1
+  minvalue 1
+  maxvalue 10000
+  nocache;
+
+--1:1문의 테이블
+drop sequence inq_seq;
+create sequence inq_seq
+  increment by 1
+  start with 1
+  minvalue 1
+  maxvalue 10000
+  nocache;
+
+drop table inquiry cascade constraints;
+create table inquiry(
+num number primary key,
+id references members(id) on delete cascade,
+pw varchar2(10) not null,
+category varchar2(30) not null,
+title varchar2(100) not null,
+content clob not null,
+regdate date default sysdate,
+viewcnt number default 0,
+ref number,
+restep number default 0,
+ip varchar2(20)
+);
+
+commit;

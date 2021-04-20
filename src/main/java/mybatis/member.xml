@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="member.model.Member">
+	<select id="GetTotalCount" resultType="int">
+		select count(*) from members
+		<if test="whatColumn == 'id'">
+			where id like #{keyword}
+		</if>
+		<if test="whatColumn == 'name'">
+			where name like #{keyword}
+		</if>
+	</select>
+	
+	<insert id="InsertMember">
+		insert into members(num, id, password, repassword, name, year, month, day, email, hp1, hp2, hp3, add1, add2, style, cat, age, gender)
+		values(mseq.nextval,#{id},#{password},#{repassword},#{name},#{year},#{month},#{day},#{email},#{hp1},#{hp2},#{hp3},#{add1},#{add2},#{style},#{cat},#{age},#{gender})
+	</insert>
+	
+	<select id ="GetData" resultType = "MyMember">
+		select * from members
+		where id = #{id}
+	</select>	
+	
+	<select id="GetDataList" resultType="MyMember">
+		select * from members
+		<if test="whatColumn == 'all'">
+			where id like #{keyword} or name like #{keyword}
+		</if>
+		<if test="whatColumn == 'id'">
+			where id like #{keyword}
+		</if>
+		<if test="whatColumn == 'name'">
+			where name like #{keyword}
+		</if>
+		order by num asc
+	</select>
+	
+	<update id = "UpdateMember">
+		update members set
+		password=#{password}, repassword=#{repassword}, year=#{year}, month=#{month}, day=#{day}, email=#{email}, hp1=#{hp1}, hp2=#{hp2}, hp3=#{hp3}, add1=#{add1}, add2=#{add2}, style=#{style}, cat=#{cat}
+		where num=#{num}
+	</update>
+	
+	<select id = "FindId" resultType = "MyMember">
+		select id from members
+		where email=#{email} and name=#{name} and hp1=#{hp1} and hp2=#{hp2} and hp3=#{hp3}
+	</select>
+	
+	<select id = "FindPw" resultType = "MyMember">
+		select password from members
+		where id=#{id} and name=#{name} and email=#{email}
+	</select>
+	
+	<delete id="DeleteData">
+		delete from members
+		where id= #{id}
+	</delete>
+	
+	<select id = "YourStyle" resultType = "Integer">
+		select e.num
+		from members m join exhibition e
+		on m.style=e.style
+		where m.id=#{id}
+	</select>
+	
+	<select id = "YourCat" resultType = "Integer">
+		select e.num
+		from members m join exhibition e
+		on m.cat = e.category
+		where m.id=#{id}
+	</select>
+	
+	<select id ="SearchId" resultType = "String">
+		select id
+		from members
+		where id=#{id}
+	</select>
+</mapper>	

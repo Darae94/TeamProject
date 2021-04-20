@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="qna.mapper">
+  	<insert id="InsertQna">
+  		insert into qna(no, category, question, answer)
+  		values(qna_seq.nextval, #{category}, #{question}, #{answer})
+  	</insert>
+  	
+  	<select id="GetTotalCount" resultType="int">
+  		select count(*) from qna
+  	</select>
+  	
+  	<select id="GetQnaList" resultType="MyQna">
+  		select * from qna
+  		<if test="value != '전체' and value != null">
+  		where category = #{value}
+  		</if>
+  		order by no desc
+  	</select>
+  	
+  	<delete id="DeleteQna">
+  		delete from qna
+  		where no = #{no}
+  	</delete>
+  	
+  	<select id="GetQnaByNo" resultType="MyQna">
+  		select * from qna
+  		where no = #{no}
+  	</select>
+  	
+  	<update id="UpdateQna">
+  		update qna set category = #{category}, question = #{question}, answer = #{answer}
+  		where no = #{no}
+  	</update>
+  </mapper>
