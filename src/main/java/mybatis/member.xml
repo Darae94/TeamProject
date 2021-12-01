@@ -15,8 +15,8 @@
 	</select>
 	
 	<insert id="InsertMember">
-		insert into members(num, id, password, repassword, name, year, month, day, email, hp1, hp2, hp3, add1, add2, style, cat, age, gender)
-		values(mseq.nextval,#{id},#{password},#{repassword},#{name},#{year},#{month},#{day},#{email},#{hp1},#{hp2},#{hp3},#{add1},#{add2},#{style},#{cat},#{age},#{gender})
+		insert into members(id, password, repassword, name, year, month, day, email, hp1, hp2, hp3, add1, add2, style, cat, age, gender)
+		values(#{id},#{password},#{repassword},#{name},#{year},#{month},#{day},#{email},#{hp1},#{hp2},#{hp3},#{add1},#{add2},#{style},#{cat},#{age},#{gender})
 	</insert>
 	
 	<select id ="GetData" resultType = "MyMember">

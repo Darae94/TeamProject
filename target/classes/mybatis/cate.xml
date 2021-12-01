@@ -5,8 +5,8 @@
   
   <mapper namespace="cate.model.Cate">
   	<insert id="InsertCate">
-  		insert into cate
-  		values(cate_seq.nextval,#{kind},#{code})
+  		insert into cate(kind, code)
+  		values(#{kind},#{code})
   	</insert>
   	
   	<select id="SelectCate" resultType="myCate">

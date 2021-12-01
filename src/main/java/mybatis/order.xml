@@ -14,8 +14,8 @@
 	</select>
 
 	<insert id="InsertData">
-		insert into orders 
-		values(seqorder.nextval, #{mid}, sysdate)
+		insert into orders(mid)
+		values(#{mid})
 	</insert>
 	
 	<select id="GetMaxOrderOnum" resultType="int">

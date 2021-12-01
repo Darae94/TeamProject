@@ -16,8 +16,8 @@
 	</select>
 
 	<insert id="InsertData">
-		insert into orderdetail
-		values(seqodetail.nextval, #{onum}, #{pnum}, #{oday}, #{otime}, #{oqty})
+		insert into orderdetail(onum, pnum, oday, otime, oqty)
+		values(#{onum}, #{pnum}, #{oday}, #{otime}, #{oqty})
 	</insert>
 	
 	<select id="GetData" resultType="orderdetail.model.OrdersInfo">

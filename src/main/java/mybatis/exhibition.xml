@@ -5,8 +5,8 @@
   
   <mapper namespace="exhibition.model.Exhibition">
   	<insert id="InsertExhibit">
-  		insert into exhibition
-  		values(ex_seq.nextval,#{category},#{name},#{start_period},#{end_period},#{start_time},#{end_time},#{place},#{company},#{price},#{area_tel},#{tel1},#{tel2},#{img},#{style},#{contents})
+  		insert into exhibition(category,name,start_period,end_period,start_time,end_time,place,company,price,area_tel,tel1,tel2,img,style,contents)
+  		values(#{category},#{name},#{start_period},#{end_period},#{start_time},#{end_time},#{place},#{company},#{price},#{area_tel},#{tel1},#{tel2},#{img},#{style},#{contents})
   	</insert>
   	
   	<select id="SelectExhibition" resultType="MyExhibition">

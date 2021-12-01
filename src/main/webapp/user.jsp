@@ -59,7 +59,7 @@
 	        transform: none;
 	    }
 	}
-	.scrollNav{position:relative; top:100px; /* background-color: rgb(241,243,243); */ height:620px;}
+	.scrollNav{position:relative; top:50px; /* background-color: rgb(241,243,243); */ height:620px;}
 </style>
 
 <script>
@@ -70,7 +70,7 @@ $(document).ready(function(){
     
     $(".scrollNav").hide();
     $(window).scroll(function(){  // 윈도우 스크롤 기능 작동
-        var rollIt = $(this).scrollTop() >= 350; 
+        var rollIt = $(this).scrollTop() >= 150; 
 
     if(rollIt){ 
 		//윈도우 스크롤 기능의 값이 navHeight 의 높이와 같거나 크면
@@ -97,8 +97,8 @@ $(function(){
 
 <!-- 사진슬라이드 -->
 <div align="center" class="mainNav">	
-    <div id="carousel-example-generic" class="carousel slide mt-5" style="height:530px; width:100%;">	
-      <ol class="carousel-indicators" style="display:relative; top:420px">		
+    <div id="carousel-example-generic" class="carousel slide" style="height:530px; width:100%;">	
+      <ol class="carousel-indicators" style="display:relative; bottom:0px">		
         <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>	
         <li data-target="#carousel-example-generic" data-slide-to="1"></li>	
         <li data-target="#carousel-example-generic" data-slide-to="3"></li>	
@@ -108,7 +108,7 @@ $(function(){
       <div class="carousel-inner" role="listbox">	
         <!-- 이미지의 개수만큼 item을 만든다. 중요한 포인트는 carousel-indicators의 li 태그 개수와 item의 개수는 일치해야 한다. -->	
         <div class="item active">	
-          <img src="resources/image/1.png" style="height:530px; width:80%;">
+          <img src="resources/image/1.png" style="height:530px; width:100%;">
           <div class="carousel-caption topcap text-primary">	
           	<h4><b>Tango w. cow</b></h4>
           	<h5>2021.04.30~5.16</h5>
@@ -119,7 +119,7 @@ $(function(){
         </div>
         	
         <div class="item">	
-          <img src="resources/image/2.png" style="height:530px; width:80%;">	
+          <img src="resources/image/2.png" style="height:530px; width:100%;">	
           <div class="carousel-caption topcap text-primary">	
          	<h4><b>Your Art Here</b></h4>
           	<h5>2021.05.25~6.10</h5>
@@ -130,7 +130,7 @@ $(function(){
         </div>
         
         <div class="item">	
-          <img src="resources/image/3.png" style="height:530px; width:80%;">	
+          <img src="resources/image/3.png" style="height:530px; width:100%;">	
           <div class="carousel-caption topcap text-primary">	
          	<h4><b>Pacific Arts</b></h4>
           	<h5>2021.07.10~7.21</h5>
@@ -141,7 +141,7 @@ $(function(){
         </div>
         
         <div class="item">	
-          <img src="resources/image/4.png" style="height:530px; width:80%;">	
+          <img src="resources/image/4.png" style="height:530px; width:100%;">	
           <div class="carousel-caption topcap text-primary">	
          	<h4><b>Asian Museum</b></h4>
           	<h5>2021.08.03~08.16</h5>
@@ -169,10 +169,10 @@ $(function(){
 </div>
 
 <!-- 디자인:스크롤,fadein 기능:추천전시작품 -->
-<div class="h-100">
-	<div class="fade-effect scrollNav">
-		<h3 style="margin-left:10%; font-family:'맑은 고딕'">회원님을 위한 <span class="text-success">추천</span> 프로그램</h3>
-		<p style="margin-left:10%; font-size: 15px" class="pb-3">
+<div class="container">
+	<div class="mt-5">
+		<h3 style="margin-left:2%; font-family:'맑은 고딕'">회원님을 위한 <span class="text-success">추천</span> 프로그램</h3>
+		<p style="margin-left:2%; font-size: 15px" class="pb-3">
 			<c:choose>
 			<c:when test="${sessionScope.loginId==null}">
 				<span class="text-danger">회원가입을 하시면 다양한 추천서비스를 받으실 수 있습니다</span><br>
@@ -188,7 +188,8 @@ $(function(){
 			</c:otherwise>
 			</c:choose>
 		</p>
-
+	</div>
+	<div class="fade-effect scrollNav">
 		<!-- 추천작품띄우기 -->
 		<div class="row mr-0" style="margin-left:8%;">
 		<c:choose>
